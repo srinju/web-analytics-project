@@ -1,12 +1,8 @@
 "use client"
 
 import { addWebsite } from "@/lib/actions/addWebsite";
-import { PrismaClient } from "@prisma/client";
-import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { string } from "zod";
 export default  function AddWebsitePage() {
-    const prisma  = new PrismaClient();
     const [step,setStep] = useState(1);
     const [website,setWebsite] = useState("");
     const [error,setError] = useState("");
