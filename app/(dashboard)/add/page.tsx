@@ -1,14 +1,23 @@
 "use client"
 
+import { addWebsite } from "@/lib/actions/addWebsite";
+import { PrismaClient } from "@prisma/client";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
-export default function AddWebsitePage() {
+import { string } from "zod";
+export default  function AddWebsitePage() {
+    const prisma  = new PrismaClient();
     const [step,setStep] = useState(1);
     const [website,setWebsite] = useState("");
     const [error,setError] = useState("");
     const [loading,setLoading] = useState(false);
-    const addWebsite = () => {
 
+    const addwebsite = async () => {
+        if(website.trim() == "" || loading) return;
+        setLoading(true);
+        await addWebsite(website);
     }
+    
     return (
         <div className="w-full min-h-screen bg-black items-center justify-center flex flex-col">
             <h1 className="text-5xl text-white/60 bg-black text-center">WebWise</h1>
@@ -23,7 +32,7 @@ export default function AddWebsitePage() {
                     {error ? <p className="text-xs pt-2 font-light text-red-400">{error}</p> : <p className="text-xs pt-2 font-light text-white/20">Enter the domain or subdomain of your web appliaction without {"www"}</p>}
                     </span>
                     {error == "" && <button 
-                        onClick={addWebsite}
+                        onClick={addwebsite}
                         type="button" className="py-2.5 px-5 my-8 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">{loading ? "adding..." : "add website"}
                     </button>}
                 </div> : <></>}

@@ -2,7 +2,7 @@
 import { z} from "zod"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaClient } from '@prisma/client';
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 import GoogleProvider from "next-auth/providers/google";
 
 
@@ -31,7 +31,7 @@ export const authOptions = {
                         }
                     });
                     if(existingUser){
-                        const passwordValidation = await bcrypt.compare(validatedCreds.password , existingUser.password);
+                        const passwordValidation = await bcryptjs.compare(validatedCreds.password , existingUser.password);
                         if(!passwordValidation){
                             return {
                                 id : existingUser.id.toString(),
