@@ -4,26 +4,27 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import useUser from "../hooks/useUser";
 import { ArrowRightIcon } from "lucide-react";
 import { signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 
 export default function AppBar({name,image}:any) {
     //const user = useUser();
-    
+    const pathname = usePathname();
     const logout = async () => {
         signOut({callbackUrl : '/'})
     }
     return (
-        <div className=" w-full border-b border-white/20 sticky top-0 bg-black z-50 bg-opacity-20 filter backdrop-blur-lg flex items-center justify-between px-6 py-3">
+        <div className=" w-full border-b border-white/20 sticky top-0 bg-black z-50 bg-opacity-20 filter backdrop-blur-lg flex items-center justify-between px-6 ">
             {/*Logo*/}
             <p className="text-lg text-white">WebWise</p>
             <div className="flex  space-x-6">
-                <div className="items-center flex space-x-4">
+                {pathname !== '/dashboard' && <div className="items-center flex space-x-4">
                     <p className="text-sm text-white/60 hover:text-white smooth cursor-pointer">Snippet</p>
                     <Link prefetch href={'/dashboard'} className="flex items-center justify-center space-x-2 group">
                         <button className="text-sm text-white/60 group-hover:text-white smooth">Dashboard</button>
                         <ArrowRightIcon className="h-4 w-4 stroke-white/60 group-hover:stroke-white smooth" />
                     </Link>
-                </div>
+                </div>}
                 <DropdownMenu>
                     <DropdownMenuTrigger className="text-white outline-none p-0 m-9 border-none">
                         <div className="flex space-x-2 items-center hover:opacity-50">
