@@ -9,6 +9,6 @@ web analytics tool for your web appplications
 
 -> create api route to add website and then pass the fetch request to the api route to add the website(done)
 
-todo>
+# TODO >
 -> create a getwebsites api endpoint and do error handling in the /add page such that 
 the user dont add in already added websites and the https should not be there too.
