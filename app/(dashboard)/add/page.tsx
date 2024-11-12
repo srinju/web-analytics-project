@@ -1,17 +1,35 @@
 "use client"
 
-import { addWebsite } from "@/lib/actions/addWebsite";
 import { useState } from "react";
+
 export default  function AddWebsitePage() {
+
     const [step,setStep] = useState(1);
     const [website,setWebsite] = useState("");
     const [error,setError] = useState("");
     const [loading,setLoading] = useState(false);
 
-    const addwebsite = async () => {
+    const handleAddWebsite = async () => {
         if(website.trim() == "" || loading) return;
-        setLoading(true);
-        await addWebsite(website);
+        try {
+            setLoading(true);
+            const response = await fetch('/pages/api/addWebsite',{
+                method : 'POST',
+                headers : {
+                    "Content-Type" : "application/json",
+                },
+                body : JSON.stringify({website})
+            });
+            if(!response.ok){
+                throw new Error("Failed to add website!");
+            }
+            const data = await response.json();
+        } catch (error : any) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+            setStep(2);
+        }
     }
     
     return (
@@ -27,8 +45,8 @@ export default  function AddWebsitePage() {
                         className="outline-none border-b border-white/20 w-full py-2 pr-4 placeholder:text-white/20 bg-transparent hover:border-white/50 smooth" />
                     {error ? <p className="text-xs pt-2 font-light text-red-400">{error}</p> : <p className="text-xs pt-2 font-light text-white/20">Enter the domain or subdomain of your web appliaction without {"www"}</p>}
                     </span>
-                    {error == "" && <button 
-                        onClick={addwebsite}
+                    {error == "" && <button
+                        onClick={handleAddWebsite}
                         type="button" className="py-2.5 px-5 my-8 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">{loading ? "adding..." : "add website"}
                     </button>}
                 </div> : <></>}
