@@ -13,7 +13,7 @@ export default  function AddWebsitePage() {
         if(website.trim() == "" || loading) return;
         try {
             setLoading(true);
-            const response = await fetch('/pages/api/addWebsite',{
+            const response = await fetch('/api/addWebsite',{
                 method : 'POST',
                 headers : {
                     "Content-Type" : "application/json",
