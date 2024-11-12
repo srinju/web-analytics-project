@@ -1,0 +1,27 @@
+import Link from "next/link";
+
+
+export default function DashboardPage() {
+    return(
+        <div className="bh-black min-h-screen h-full w-full relative items-center justify-center flex flex-col">
+            {/* HEADER */}
+            <div className="w-full items-start justify-start flex flex-col min-h-screen">
+                <div className=" w-full items-center justify-end flex p-6 border-b border-white/5 z-40">
+                    <Link href={'/add'} prefetch>
+                        <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">+ Add Website </button>
+                    </Link>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-10 p-6 z-40">
+                    {/*websites.map(website => (
+                        <Link key={website.id} href={`/w/${website.website_name}`}>
+                            <div className="border border-white/5 rounded-md py-12 px-6 text-white bg-black w-full cursor-pointer smooth hover:border-white/20 hover:bg-[#050505]">
+                                <h2>{website.website_name}</h2>
+                            </div>
+                        </Link>
+                    )) */}
+                </div>
+            </div>
+        </div>
+    )
+}
