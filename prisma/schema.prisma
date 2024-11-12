@@ -18,4 +18,12 @@ model User {
   email String @unique
   name String 
   password String
+  websites Website[]
+}
+
+model Website {
+  id String @id @default(uuid())
+  website_name String
+  userid String
+  user User @relation(fields: [userid], references: [id])
 }
