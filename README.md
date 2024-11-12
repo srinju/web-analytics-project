@@ -6,8 +6,7 @@ web analytics tool for your web appplications
 2. dashboard page 
 3. header or app bar
 4. website schema added and addwebsite functionality done
-
--> create api route to add website and then pass the fetch request to the api route to add the website(done)
+5. create api route to add website and then pass the fetch request to the api route to add the website(done)
 
 # TODO >
 -> create a getwebsites api endpoint and do error handling in the /add page such that 
