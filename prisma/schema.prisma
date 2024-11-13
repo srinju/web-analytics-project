@@ -26,4 +26,20 @@ model Website {
   website_name String
   userid String
   user User @relation(fields: [userid], references: [id])
+  visits Visits[]
+}
+
+model Visits {
+  id String @id @default(uuid())
+  created_at DateTime @default(now())
+  website_id String
+  source String
+  website Website @relation(fields: [website_id] , references: [id])
+}
+
+model Page_view {
+  id String @id @default(uuid())
+  created_at DateTime @default(now())
+  domain String
+  page String
 }
