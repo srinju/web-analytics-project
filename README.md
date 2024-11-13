@@ -11,6 +11,7 @@ web analytics tool for your web appplications
 the user dont add in already added websites and the https should not be there too.(done)
 7. create a step2 of the add website page where after entering the domain , user can
    paste the script to their codebase , through which they can monitor their websites
+8. write the tracking script in the public folder of the repo
    
  # TODO>>
-  1. write the tracking script in the public folder of the repo
+  1. 
