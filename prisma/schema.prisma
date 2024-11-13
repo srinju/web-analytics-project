@@ -19,6 +19,8 @@ model User {
   name String 
   password String
   websites Website[]
+  visits Visits[]
+  page_views Page_view[]
 }
 
 model Website {
@@ -33,13 +35,17 @@ model Visits {
   id String @id @default(uuid())
   created_at DateTime @default(now())
   website_id String
+  userid String
   source String
+  user User @relation(fields: [userid], references: [id])
   website Website @relation(fields: [website_id] , references: [id])
 }
 
 model Page_view {
   id String @id @default(uuid())
   created_at DateTime @default(now())
+  userid String
   domain String
   page String
+  user User @relation(fields: [userid], references: [id])
 }
