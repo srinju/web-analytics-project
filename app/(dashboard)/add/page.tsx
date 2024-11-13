@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default  function AddWebsitePage() {
@@ -8,6 +9,7 @@ export default  function AddWebsitePage() {
     const [website,setWebsite] = useState("");
     const [error,setError] = useState("");
     const [loading,setLoading] = useState(false);
+    const router = useRouter();
 
     const handleAddWebsite = async () => {
         if(website.trim() == "" || loading) return;
@@ -93,7 +95,24 @@ export default  function AddWebsitePage() {
                         onClick={handleAddWebsite}
                         type="button" className="py-2.5 px-5 my-8 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">{loading ? "adding..." : "add website"}
                     </button>}
-                </div> : <></>}
+                </div> : <div className="w-full items-center justify-center flex flex-col space-y-10">
+                    <span className="w-full lg:w-[50%]">
+                        <textarea typeof="text" className="outline-none border-b border-white/20 w-full py-2 pr-4 bg-transparent hover:border-white/50 smooth text-white/60 cursor-text" disabled
+                            value={`<script defer data-domain="${website}"
+                            src="http://localhost:3000/tracking-script.ts"></script>`}
+                        />
+                        <p className="text-xs text-white/100 pt-3 font-light">
+                            Paste this code snippet in the <b className="text-red-600">{"<head>"}</b> of your code base of your website in the index.html file
+                        </p>
+                    </span>
+                    <button 
+                        onClick={() => {
+                            router.push(`/w/${website.trim()}`)
+                        }}
+                        type="button"   
+                        className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                        >Added</button>
+                    </div>}
             </div>
         </div>
     )
