@@ -14,4 +14,4 @@ the user dont add in already added websites and the https should not be there to
 8. write the tracking script in the public folder of the repo
    
  # TODO>>
-  1. 
+  1. Add a api endpoint where all the tracking data and goes and gets stored in the database
