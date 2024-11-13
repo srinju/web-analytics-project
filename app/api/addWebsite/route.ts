@@ -17,6 +17,19 @@ export async function POST(req : Request ){
     }
     const {website} = await req.json();
     try {
+        const existingWebsite = await prisma.website.findFirst({
+            where : {
+                website_name : website.trim(),
+                userid : session.user.id
+            }
+        });
+        if(existingWebsite){
+            return NextResponse.json({
+                message : "this domain already exisits!!"
+            }, {
+                status : 409
+            })
+        }
         const newWebsite  = await prisma.website.create({
             data : {
                 website_name : website.trim(),
@@ -24,7 +37,8 @@ export async function POST(req : Request ){
             }
         });
         return NextResponse.json({
-            newWebsite
+            newWebsite,
+            message : "website added successfully!!"
         },{
             status : 200
         });

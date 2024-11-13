@@ -20,18 +20,23 @@ export default  function AddWebsitePage() {
                 },
                 body : JSON.stringify({website})
             });
-            if(!response.ok){
-                throw new Error("Failed to add website!");
-            }
-            const data = await response.json();
+            if(response.status === 409){
+                setError("This domain is already added!");
+            } else if (!response.ok){
+                throw new Error("Failed to add Website!!");
+            } else {
+                const data = await response.json();
+                setError("");
+                setLoading(false);
+                setStep(2);
+            }  
         } catch (error : any) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-            setStep(2);
-        }
+            console.error("error occured while checking domain!!" , error)
+            setError("An error occured , Please try again!!");
+        } 
     }
 
+    /*
     const checkDomainAddedBefore = async () => {
         let fetchedWebsites = [];
         try {
@@ -53,6 +58,7 @@ export default  function AddWebsitePage() {
             setError("An error occured , please try again!!");
         }
     }
+    */
 
     useEffect(() => { //more error handling 
         if(
@@ -84,7 +90,7 @@ export default  function AddWebsitePage() {
                     {error ? <p className="text-xs pt-2 font-light text-red-400">{error}</p> : <p className="text-xs pt-2 font-light text-white/20">Enter the domain or subdomain of your web appliaction without {"www"}</p>}
                     </span>
                     {error == "" && <button
-                        onClick={checkDomainAddedBefore}
+                        onClick={handleAddWebsite}
                         type="button" className="py-2.5 px-5 my-8 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">{loading ? "adding..." : "add website"}
                     </button>}
                 </div> : <></>}
