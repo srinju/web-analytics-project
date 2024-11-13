@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default  function AddWebsitePage() {
 
@@ -31,6 +31,44 @@ export default  function AddWebsitePage() {
             setStep(2);
         }
     }
+
+    const checkDomainAddedBefore = async () => {
+        let fetchedWebsites = [];
+        try {
+            const response = await fetch('/api/getWebsite');
+            const data = await response.json();
+            if(response.ok){
+                fetchedWebsites = data.presentWebsites;
+                if(
+                    fetchedWebsites.filter((item : any) => item.website_name == website).length > 0 //this means we have duplicate domains entered
+                ) {
+                    setError("This domain is added before!");
+                } else {
+                    setError("");
+                    handleAddWebsite(); // after all the checks add the website 
+                }
+            }
+        } catch (error) {
+            console.error("Error checking domain!!" , error);
+            setError("An error occured , please try again!!");
+        }
+    }
+
+    useEffect(() => { //more error handling 
+        if(
+            website.trim().includes("http") ||
+            website.trim().includes("https") ||
+            website.trim().includes("http : //") ||
+            website.trim().includes("https : //") ||
+            website.trim().includes("://") ||
+            website.trim().includes(":") ||
+            website.trim().includes("/") 
+        ) {
+            setError("Please enter the domain only , i.e : (google.com)");
+        } else {
+            setError("");
+        }
+    },[website]);
     
     return (
         <div className="w-full min-h-screen bg-black items-center justify-center flex flex-col">
@@ -46,7 +84,7 @@ export default  function AddWebsitePage() {
                     {error ? <p className="text-xs pt-2 font-light text-red-400">{error}</p> : <p className="text-xs pt-2 font-light text-white/20">Enter the domain or subdomain of your web appliaction without {"www"}</p>}
                     </span>
                     {error == "" && <button
-                        onClick={handleAddWebsite}
+                        onClick={checkDomainAddedBefore}
                         type="button" className="py-2.5 px-5 my-8 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">{loading ? "adding..." : "add website"}
                     </button>}
                 </div> : <></>}
