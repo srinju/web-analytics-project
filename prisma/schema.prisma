@@ -36,7 +36,7 @@ model Visits {
   created_at DateTime @default(now())
   website_id String
   userid String
-  source String
+  source String?
   user User @relation(fields: [userid], references: [id])
   website Website @relation(fields: [website_id] , references: [id])
 }
