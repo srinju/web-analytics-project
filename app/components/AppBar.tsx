@@ -16,7 +16,7 @@ export default function AppBar({name,image}:any) {
     return (
         <div className=" w-full border-b border-white/20 sticky top-0 bg-black z-50 bg-opacity-20 filter backdrop-blur-lg flex items-center justify-between px-6 ">
             {/*Logo*/}
-            <p className="text-lg text-white">WebWise</p>
+            <p className="text-2xl text-white">WebWise</p>
             <div className="flex  space-x-6">
                 {pathname !== '/dashboard' && <div className="items-center flex space-x-4">
                     <p className="text-sm text-white/60 hover:text-white smooth cursor-pointer">Snippet</p>
@@ -30,7 +30,7 @@ export default function AppBar({name,image}:any) {
                         <div className="flex space-x-2 items-center hover:opacity-50">
                             <p className="text-sm">{name.split(" ")[0]}</p>
                             <div className="relative inline-flex items-center justify-center w-7 h-7 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                                <span className="font-medium text-gray-600 dark:text-gray-300">{name.split(" ")[0][0]}</span>
+                                <span className="font-medium text-gray-600 dark:text-gray-300">{name.split(" ")[0][0].toUpperCase()}</span>
                             </div>
                         </div>
                     </DropdownMenuTrigger>

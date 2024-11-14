@@ -29,7 +29,7 @@ export default async function DashboardPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-10 p-6 z-40">
                     {websites.map(website => (
                         <Link key={website.id} href={`/w/${website.website_name}`}>
-                            <div className="border border-white/5 rounded-md py-12 px-6 text-white bg-black w-full cursor-pointer smooth hover:border-white/20 hover:bg-[#050505]">
+                            <div className="border border-white/15 rounded-md py-12 px-6 text-white bg-black w-full cursor-pointer smooth hover:border-white/40 hover:bg-[#242424] ">
                                 <h2>{website.website_name}</h2>
                             </div>
                         </Link>
