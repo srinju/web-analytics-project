@@ -12,6 +12,8 @@ the user dont add in already added websites and the https should not be there to
 7. create a step2 of the add website page where after entering the domain , user can
    paste the script to their codebase , through which they can monitor their websites
 8. write the tracking script in the public folder of the repo
+9. Add a api endpoint where all the tracking data and goes and gets stored in the database
    
  # TODO>>
-  1. Add a api endpoint where all the tracking data and goes and gets stored in the database
+  1. recheck the api/track endpoint (it may throw ERROR)
+  2. update the dashboard page and fetch the monitor data from the database to the dashboard
