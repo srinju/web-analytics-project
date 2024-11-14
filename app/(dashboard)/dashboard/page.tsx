@@ -1,4 +1,5 @@
 import AppBar from "@/app/components/AppBar";
+import { getWebsites } from "@/app/lib/actions/getWebsites";
 import { authOptions } from "@/app/lib/auth";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -9,6 +10,12 @@ export default async function DashboardPage() {
     if(!session){
         return null
     }
+    const userid = session.user.id
+    const websites = await getWebsites(userid);
+    if(!websites) {
+        return null;
+    }
+
     return(
         <div className="bg-black min-h-screen h-full w-full relative items-center justify-center flex flex-col">
             <AppBar name={session.user.name}/>
@@ -20,13 +27,13 @@ export default async function DashboardPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-10 p-6 z-40">
-                    {/*websites.map(website => (
+                    {websites.map(website => (
                         <Link key={website.id} href={`/w/${website.website_name}`}>
                             <div className="border border-white/5 rounded-md py-12 px-6 text-white bg-black w-full cursor-pointer smooth hover:border-white/20 hover:bg-[#050505]">
                                 <h2>{website.website_name}</h2>
                             </div>
                         </Link>
-                    )) */}
+                    )) }
                 </div>
             </div>
         </div>
