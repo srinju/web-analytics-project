@@ -37,9 +37,9 @@ const Signup = () => {
         });
     }
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center min-h-screen bg-black">
     <div className=" p-8 rounded-lg shadow-lg w-96 border">
-      <h2 className="text-2xl font-bold text-center mb-6">Sign Up To WebWise </h2>
+      <h2 className="text-2xl font-bold text-center mb-6 text-white">Sign Up To WebWise </h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="name" className="block text-sm font-medium text-white">Name</label>

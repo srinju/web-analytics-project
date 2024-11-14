@@ -1,7 +1,6 @@
 "use client"
 import Link from "next/link";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import useUser from "../hooks/useUser";
 import { ArrowRightIcon } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
@@ -28,9 +27,9 @@ export default function AppBar({name,image}:any) {
                 <DropdownMenu>
                     <DropdownMenuTrigger className="text-white outline-none p-0 m-9 border-none">
                         <div className="flex space-x-2 items-center hover:opacity-50">
-                            <p className="text-sm">{name.split(" ")[0]}</p>
+                            <p className="text-sm">{name?.split(" ")[0]}</p>
                             <div className="relative inline-flex items-center justify-center w-7 h-7 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                                <span className="font-medium text-gray-600 dark:text-gray-300">{name.split(" ")[0][0].toUpperCase()}</span>
+                                <span className="font-medium text-gray-600 dark:text-gray-300">{name?.split(" ")[0][0].toUpperCase()}</span>
                             </div>
                         </div>
                     </DropdownMenuTrigger>

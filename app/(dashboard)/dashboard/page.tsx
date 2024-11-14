@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 
 
-export default async function DashboardPage() {
+export default async function DashboardPage(context: any) {
     const session = await getServerSession(authOptions);
     if(!session){
         return null

@@ -12,7 +12,7 @@ const signinSchema = z.object({
     password : z.string().min(6,"password should be atleast of 6 charecters").nonempty("password field is required")
 });
 const prisma = new PrismaClient();
-export const authOptions = {
+export const authOptions  = {
     providers : [
         CredentialsProvider({
             name : 'Credentials',
@@ -32,14 +32,13 @@ export const authOptions = {
                     });
                     if(existingUser){
                         const passwordValidation = await bcryptjs.compare(validatedCreds.password , existingUser.password);
-                        if(!passwordValidation){
+                        if(passwordValidation){
                             return {
                                 id : existingUser.id.toString(),
                                 name : existingUser.name,
                                 email : existingUser.email
                             }
                         }
-                        return null;
                     }
                     return null;
                 } catch(err) {
@@ -54,10 +53,50 @@ export const authOptions = {
         })
     ],
     secret : process.env.JWT_SECRET || "secret",
+    
     callbacks : {
         async session({token , session} : any) {
             session.user.id = token.sub
             return session;
         }
     }
+    
+    
+   /*
+    cookies: {
+        sessionToken: {
+          name: `__Secure-next-auth.session-token`,
+          options: {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            path: "/",
+          },
+        },
+    },
+    session: {
+        strategy: "jwt",
+    },
+    callbacks: {
+        async jwt({ token, user } : any) {
+          // Pass user details to the token on initial sign in
+          if (user) {
+            token.id = user.id;
+            token.name = user.name;
+            token.email = user.email;
+          }
+          return token;
+        },
+        async session({ session, token } : any ) {
+          // Set session.user.id from token.id
+          if (session.user) {
+            session.user.id = token.id as string;
+            session.user.email = token.email as string;
+            session.user.name = token.name as string;
+          }
+          return session;
+        }
+      }
+    */
+        
 }

@@ -36,7 +36,7 @@ export async function POST(req : Request){
         if(!newUser){
             throw new Error("errror occured while creating user");
         }
-        NextResponse.json({
+        return NextResponse.json({
             user : newUser,
             message : "user created successfully!!"
         })
