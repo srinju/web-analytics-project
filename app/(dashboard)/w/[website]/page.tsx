@@ -47,8 +47,6 @@ export default  async function WebsitePage({ params }: { params: { website: stri
     }
     */
 
-
-    
     //This function groups URLs by page path and counts the number of visits per path, returning a simplified list of unique pages and their respective visit counts.
     function groupPageViews(pageViews : any) {
         const groupedPageViews : any = {};
