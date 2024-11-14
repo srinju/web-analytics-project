@@ -16,3 +16,4 @@ the user dont add in already added websites and the https should not be there to
    
  # TODO>>
   1. recheck the api/track endpoint (it may throw ERROR)
+  2. update the dashboard page and fetch the monitor data from the database to the dashboard
