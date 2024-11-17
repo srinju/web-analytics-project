@@ -2,6 +2,7 @@
 
 import AppBar from "@/app/components/AppBar";
 import { getWebsites } from "@/app/lib/actions/getWebsites";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PrismaClient } from "@prisma/client";
 import { redirect, useParams } from "next/navigation";
 import { useRouter } from "next/router";
@@ -132,10 +133,45 @@ export default function WebsiteClient({website  , session} : WebsiteClientProps)
     return(
         <div className="bg-black text-white min-h-screen w-full items-start justify-start flex flex-col">
             <AppBar name={session.name} />
-            <div>
-                <p>website : {website}</p>
-                <p>name : {session.name}</p>
-            </div>
+            {pageViews?.length == 0 && !loading ? <div className="w-full items-center justify-center
+             flex flex-col space-y-6 z-40 relative min-h-screen px-4">
+                <div className="z-40 w-full lg:w-2/3 bg-black border border-white/10 py-12 px-8 items-center justify-center flex flex-col text-white space-y-4 relative">
+                    <p className="bg-green-900 rounded-full p-4 animate-pulse" />
+                    <p>Waiting for the first Page View</p>
+                    <button
+                        onClick={() => {
+                            window.location.reload();
+                        }} 
+                        type="button" 
+                        className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Refresh</button>
+                        <div>
+                            {/* SCRIPT WALA PART */}
+                        </div>
+                </div>
+             </div> : <div className="w-full justify-center flex items-center">
+                <Tabs defaultValue="general" className="w-full items-center justify-center flex flex-col">
+                    <TabsList className="w-full bg-transparent mb-4 items-start justify-start flex">
+                        <TabsTrigger value="general">General</TabsTrigger>
+                        <TabsTrigger value="custom events">Custom Events</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="general">
+                        <div className="w-full grid grid-cols-1 md:grid-cols-2 px-4 gap-6">
+                            <div className="bg-black border-white/10 border text-white text-center">
+                                <p className="text-white/70 font-medium py-8 w-full text-center border-b border-white/10 ">TOTAL VISITS</p>
+                                <p className="py-12 text-3xl lg:text-4xl font-bold bg-[#050505]">
+                                    {totalVisits.length}
+                                </p>
+                            </div>
+                            <div className="bg-black border-white/10 border text-white text-center">
+                                <p>PAGE VIEWS</p>
+                            </div>
+                        </div>
+                        
+                    </TabsContent>
+                    <TabsContent value="custom events">Change your password here.</TabsContent>
+                </Tabs>
+
+                </div>}
             
         </div>
     )
