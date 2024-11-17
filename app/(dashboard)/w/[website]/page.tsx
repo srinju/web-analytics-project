@@ -15,14 +15,13 @@ export default  async function WebsitePage({ params }: { params: { website: stri
    
     
         
-    const websiteData = await getWebsites(session.user.id);//getting the websites for the user
+    //const websiteData = await getWebsites(session.user.id);//getting the websites for the user
 
-    if(!websiteData || websiteData.length == 0) {
-        return redirect('/dashboard');
-    }
+    
 
     //fetching page views and total visits>>
 
+    /*
     const pageViews = await prisma.page_view.findMany({
         where : {
             domain : params.website,
@@ -36,6 +35,7 @@ export default  async function WebsitePage({ params }: { params: { website: stri
             userid : session.user.id
         }
     });
+    */
 
     /*
     const checkWebsiteCurrentUser = async () => { //check website of the current user 
@@ -46,6 +46,7 @@ export default  async function WebsitePage({ params }: { params: { website: stri
     */
 
     //This function groups URLs by page path and counts the number of visits per path, returning a simplified list of unique pages and their respective visit counts.
+    /*
     function groupPageViews(pageViews : any) {
         const groupedPageViews : any = {};
         pageViews.forEach(({page} : any)  => {
@@ -62,10 +63,10 @@ export default  async function WebsitePage({ params }: { params: { website: stri
     }
 
     const groupedPageViews = groupPageViews(pageViews);
+    */
 
     return <div className="bg-black text-white min-h-screen w-full items-start justify-start flex flex-col">
-        <AppBar name={session.user.name} />
-        <WebsiteClient website={params.website} websites={websiteData} session={{
+        <WebsiteClient website={params.website} session={{
             id : session.user.id,
             name : session.user.name,
             email : session.user.email,
