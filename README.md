@@ -19,8 +19,9 @@ the user dont add in already added websites and the https should not be there to
   1. recheck the api/track endpoint (it may throw ERROR)
   2. make the w/dynamic website page where all the traffic/monitoring data of the website      is rendered for that particular registered website, it is shown whenever the pageView
      is greater than 0 , if not it will show a page  as waiting for the first page view
-  3. Make the pageview<1 page as waiting for the first page view
-  4. Make the monitoring data in the page after the first page view.
+     (client to server component handling in the dynamic website page)
+  4. Make the pageview<1 page as waiting for the first page view
+  5. Make the monitoring data in the page after the first page view.
      
    
      
