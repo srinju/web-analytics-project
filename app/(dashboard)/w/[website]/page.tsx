@@ -13,9 +13,7 @@ export default  async function WebsitePage({ params }: { params: { website: stri
     const session = await getServerSession(authOptions);
     //const {Website} = useParams(); //in dynamic route whenever the user clicks on the website of them then it comes to this page and the {website} catches the website url with the useparams
    
-    if(!session || !session.user) {
-        return redirect('/api/auth/signin');
-    }
+    
         
     const websiteData = await getWebsites(session.user.id);//getting the websites for the user
 
@@ -67,6 +65,11 @@ export default  async function WebsitePage({ params }: { params: { website: stri
 
     return <div className="bg-black text-white min-h-screen w-full items-start justify-start flex flex-col">
         <AppBar name={session.user.name} />
-        <WebsiteClient website={params.website} websites={websiteData}/>
+        <WebsiteClient website={params.website} websites={websiteData} session={{
+            id : session.user.id,
+            name : session.user.name,
+            email : session.user.email,
+            password : session.user.password
+        }}/>
     </div>
 }
