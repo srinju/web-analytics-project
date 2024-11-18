@@ -23,6 +23,8 @@ the user dont add in already added websites and the https should not be there to
      (client to server component handling in the dynamic website page)
      
   3. Make the monitoring data in the page after the first page view.
+  4. create a api route for the get pageview and get visits
+  5. fetch the visits and page view
      
    
      
