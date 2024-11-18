@@ -21,7 +21,7 @@ interface WebsiteClientProps {
 
 interface PageView {
     id: string;
-    userid: string;
+    //userid: string;
     created_at: Date;
     domain: string;
     page: string;
@@ -29,7 +29,7 @@ interface PageView {
 
 interface Visit {
     id: string;
-    userid: string;
+    //userid: string;
     created_at: Date;
     website_id: string;
     source: string | null;
@@ -82,13 +82,13 @@ export default function WebsiteClient({website  , session} : WebsiteClientProps)
                 prisma.page_view.findMany({
                     where : {
                         domain : website,
-                        userid : session.id
+                       // userid : session.id
                     }
                 }),
                 prisma.visits.findMany({
                     where : {
                         website_id : website,
-                        userid : session.id
+                       // userid : session.id
                     }
                 })
             ]);
@@ -119,6 +119,16 @@ export default function WebsiteClient({website  , session} : WebsiteClientProps)
             page : page,
             visits : groupedPageViews[page]
         }));
+    }
+
+    const abbreviateNumber = (number : number) => {
+        if(number >= 1000000) {
+            return (number / 1000000).toFixed(1) + "M";
+        } else if(number >= 1000) {
+            return (number / 1000).toFixed(1) + "K";
+        } else {
+            return number.toString();
+        }
     }
 
     if(loading) {
@@ -159,7 +169,7 @@ export default function WebsiteClient({website  , session} : WebsiteClientProps)
                             <div className="bg-black border-white/10 border text-white text-center">
                                 <p className="text-white/70 font-medium py-8 w-full text-center border-b border-white/10 ">TOTAL VISITS</p>
                                 <p className="py-12 text-3xl lg:text-4xl font-bold bg-[#050505]">
-                                    {totalVisits.length}
+                                    {abbreviateNumber(totalVisits?.length)}
                                 </p>
                             </div>
                             <div className="bg-black border-white/10 border text-white text-center">

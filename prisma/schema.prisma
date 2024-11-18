@@ -19,13 +19,13 @@ model User {
   name String 
   password String
   websites Website[]
-  visits Visits[]
-  page_views Page_view[]
+  //visits Visits[]
+  //page_views Page_view[]
 }
 
 model Website {
   id String @id @default(uuid())
-  website_name String
+  website_name String @unique
   userid String
   user User @relation(fields: [userid], references: [id])
   visits Visits[]
@@ -35,17 +35,17 @@ model Visits {
   id String @id @default(uuid())
   created_at DateTime @default(now())
   website_id String
-  userid String
+  //userid String
   source String?
-  user User @relation(fields: [userid], references: [id])
-  website Website @relation(fields: [website_id] , references: [id])
+  //user User @relation(fields: [userid], references: [id])
+  website Website @relation(fields: [website_id] , references: [website_name])
 }
 
 model Page_view {
   id String @id @default(uuid())
   created_at DateTime @default(now())
-  userid String
+  //userid String
   domain String
   page String
-  user User @relation(fields: [userid], references: [id])
+  //user User @relation(fields: [userid], references: [id])
 }
