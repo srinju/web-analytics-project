@@ -4,12 +4,11 @@ import AppBar from "@/app/components/AppBar";
 import { getWebsites } from "@/app/lib/actions/getWebsites";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PrismaClient } from "@prisma/client";
-import { redirect, useParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { redirect, useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface WebsiteClientProps {
-    website : string,
+    //website : string,
     //websites : any,
     session : {
         name : string,
@@ -40,9 +39,8 @@ interface GroupedPageView {
     visits: number; 
 }
 
-const prisma = new PrismaClient();
 
-export default function WebsiteClient({website  , session} : WebsiteClientProps) {
+export default function WebsiteClient({session} : WebsiteClientProps) {
     //const params  = useParams();
     //website gets the current domain of the user for monitoring reads
     //websites is for all the website data(not really needed)
@@ -52,18 +50,27 @@ export default function WebsiteClient({website  , session} : WebsiteClientProps)
     const [pageViews , setPageViews] = useState<PageView[]>([]);
     const [totalVisits , setTotalVisits] = useState<Visit[]>([]);
     const [groupedPageViews , setGroupedPageViews] = useState<GroupedPageView[]>([]);
+    const router = useRouter();
+
+    const params =  useParams();
+    const website =  params.website as string;
     
     useEffect(() => {
+        console.log("use effect mounted!!");
         if(!session) {
             return redirect('/api/auth/signin');
-        }    
+        }
+        /*    
         const checkWebsiteCurrentUser = async () => { //check website for the current website registered for the user or not 
+            console.log("checking if website belongs to current user ",website);
+            
             const websiteData = await prisma.website.findFirst({
                 where : {
                     website_name  : website,
                     userid : session.id
                 }
             });
+            console.log("the website data from the useeffect is ",websiteData);
             if(!websiteData) {
                 redirect('/dashboard');
             } else {
@@ -72,37 +79,53 @@ export default function WebsiteClient({website  , session} : WebsiteClientProps)
                 },500);
             }
         };
-        checkWebsiteCurrentUser();   
-    },[session]);
+        checkWebsiteCurrentUser();
+        */
 
-    const fetchViews  = async() => {
-        setLoading(true);
-        try {
-            const [viewsResponse ,visitsResponse ] = await Promise.all([
-                prisma.page_view.findMany({
-                    where : {
-                        domain : website,
-                       // userid : session.id
+        const fetchViews  = async() => {
+            setLoading(true);
+            console.log('website that is gonna show the analytics for ' , website);
+            try {
+                console.log("constructing api call to : ", `/api/analytics/${website}`);
+    
+                const response = await fetch(`/api/analytics/${website}` , {
+                    method : 'GET',
+                    headers : {
+                        'Content-Type' : 'application/json'
                     }
-                }),
-                prisma.visits.findMany({
-                    where : {
-                        website_id : website,
-                       // userid : session.id
-                    }
-                })
-            ]);
-            const views = viewsResponse;
-            const visits = visitsResponse;
-            setPageViews(views);
-            setGroupedPageViews(groupPageViews(views));
-            setTotalVisits(visits);
-        } catch(error) {
-            console.error("error occured while in fetchViews function" , error);
-        } finally {
-            setLoading(false);
+                });
+                console.log("response status ", response.status);
+                console.log('response from the analytics endpoint ' , response);
+    
+                if(!response.ok) {
+                    console.error("erorr fetching analytics", response.statusText);
+                    router.push('/dashboard');
+                    throw new Error("Failed to fetch analytics data");
+                }
+                const data = await response.json();
+                if(!data.websiteData) {
+                    router.push('/dashboard');
+                }
+                setPageViews(data.views || []);
+                setGroupedPageViews(groupPageViews(data.views || []));
+                setTotalVisits(data.visits || []);
+            } catch(error) {
+                console.error("error occured while in fetchViews function" , error);
+            } finally {
+                setLoading(false);
+            }
         }
-    }
+
+        if(website){
+            fetchViews();
+        } else {
+            console.error('website parameter is undefined , redirecting to dashboard');
+            router.push('/dashboard');
+        }
+
+    },[session,website]);
+
+    
 
     //This function groups URLs by page path and counts the number of visits per path, returning a simplified list of unique pages and their respective visit counts.
 
@@ -132,7 +155,7 @@ export default function WebsiteClient({website  , session} : WebsiteClientProps)
     }
 
     if(loading) {
-        <div className="bg-black text-white min-h-screen w-full items-start justify-start flex flex-col">
+        return <div className="bg-black text-white min-h-screen w-full items-start justify-start flex flex-col">
             <AppBar name = {session.name}/>
             <div className="min-h-screen w-full items-center justify-center flex text-white relative">
                 Loading ...
@@ -143,7 +166,7 @@ export default function WebsiteClient({website  , session} : WebsiteClientProps)
     return(
         <div className="bg-black text-white min-h-screen w-full items-start justify-start flex flex-col">
             <AppBar name={session.name} />
-            {pageViews?.length == 0 && !loading ? <div className="w-full items-center justify-center
+            {pageViews?.length == 0 && totalVisits.length ==0 && !loading ? <div className="w-full items-center justify-center
              flex flex-col space-y-6 z-40 relative min-h-screen px-4">
                 <div className="z-40 w-full lg:w-2/3 bg-black border border-white/10 py-12 px-8 items-center justify-center flex flex-col text-white space-y-4 relative">
                     <p className="bg-green-900 rounded-full p-4 animate-pulse" />
@@ -155,7 +178,7 @@ export default function WebsiteClient({website  , session} : WebsiteClientProps)
                         type="button" 
                         className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Refresh</button>
                         <div>
-                            {/* SCRIPT WALA PART */}
+                            {/* SCRIPT  PART */}
                         </div>
                 </div>
              </div> : <div className="w-full justify-center flex items-center">
@@ -180,9 +203,7 @@ export default function WebsiteClient({website  , session} : WebsiteClientProps)
                     </TabsContent>
                     <TabsContent value="custom events">Change your password here.</TabsContent>
                 </Tabs>
-
                 </div>}
-            
         </div>
     )
 }

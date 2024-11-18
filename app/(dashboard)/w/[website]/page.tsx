@@ -65,8 +65,11 @@ export default  async function WebsitePage({ params }: { params: { website: stri
     const groupedPageViews = groupPageViews(pageViews);
     */
 
+    console.log('Page rendering with website ' , params.website);
+
+
     return <div className="bg-black text-white min-h-screen w-full items-start justify-start flex flex-col">
-        <WebsiteClient website={params.website} session={{
+        <WebsiteClient  session={{
             id : session.user.id,
             name : session.user.name,
             email : session.user.email,
