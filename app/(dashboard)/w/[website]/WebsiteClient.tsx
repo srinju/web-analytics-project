@@ -1,9 +1,7 @@
 "use client"
 
 import AppBar from "@/app/components/AppBar";
-import { getWebsites } from "@/app/lib/actions/getWebsites";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PrismaClient } from "@prisma/client";
 import { redirect, useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -50,6 +48,9 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
     const [pageViews , setPageViews] = useState<PageView[]>([]);
     const [totalVisits , setTotalVisits] = useState<Visit[]>([]);
     const [groupedPageViews , setGroupedPageViews] = useState<GroupedPageView[]>([]);
+    const [customEvents , setCustomEvents] = useState([]);
+    const [groupedPageViewsSources,setGroupedPageViewsSources] = useState([]);
+    const [groupedCustomEvents , setGroupedCustomEvents] = useState([]);
     const router = useRouter();
 
     const params =  useParams();
