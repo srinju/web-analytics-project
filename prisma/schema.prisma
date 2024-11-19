@@ -29,6 +29,7 @@ model Website {
   userid String
   user User @relation(fields: [userid], references: [id])
   visits Visits[]
+  events Events[]
 }
 
 model Visits {
@@ -48,4 +49,13 @@ model Page_view {
   domain String
   page String
   //user User @relation(fields: [userid], references: [id])
+}
+
+model Events {
+  id String @id @default(uuid())
+  created_at DateTime @default(now())
+  event_name String
+  website_id String
+  message String
+  website Website @relation(fields: [website_id] , references: [website_name])
 }
