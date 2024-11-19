@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 import AppBar from "./AppBar";
+import { CodeComp } from "./CodeComp";
 
 
 interface SettingsPageClientProps  {
@@ -19,6 +20,7 @@ export default function SettingsPageClient({session} : SettingsPageClientProps) 
 
     const [loading , setLoading] = useState(false);
     const [apikey , setApikey] = useState("");
+    const [buttonText , setButtonText] = useState("Copy API Key");
     const router = useRouter();
 
     useEffect(() => {
@@ -72,6 +74,20 @@ export default function SettingsPageClient({session} : SettingsPageClientProps) 
         }
     }
 
+    const copyApiKey = () => {
+        navigator.clipboard.writeText(apikey).then(
+            () => {
+                setButtonText("Copied");
+                setTimeout(() => {
+                    setButtonText("Copy API Key")
+                },5000);
+            },
+            (err) => {
+                console.error("failed to copy text ",err);
+            }
+        )
+    }
+
     useEffect(() => {
         if(!session) {
             return;
@@ -99,6 +115,32 @@ export default function SettingsPageClient({session} : SettingsPageClientProps) 
                         className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                             Generate API Key
                     </button> }
+                    {apikey && <div className="mt-12 border-white/10 border bg-[#131313] space-y-12 lg:w-1/2  py-12 w-full  md:w-3/4 ">
+                        <div className="space-y-12 px-4 ">
+                            <p>Your API Key :</p>
+                            <input 
+                                type="text"
+                                readOnly
+                                disabled 
+                                cursor-text
+                                className="outline-none border-b border-white/20 w-full px-4 py-1 bg-[#252525]" 
+                                value={apikey}
+                            />
+                            <button 
+                                type="button" 
+                                onClick={copyApiKey} 
+                                className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 justify-center">
+                                     {buttonText}
+                            </button> 
+                        </div>
+                        <div className="space-y-4 border-t border-white/10 bg-[#131313] p-6">
+                            <h1>You can Create Cusotom using Our API as instructed below :-</h1>
+                            <p className="text-sm text-red-500">Copy the Code</p>
+                            <div>
+                                <CodeComp />
+                            </div>
+                        </div>
+                    </div>}
             </div>
         </div>
     )

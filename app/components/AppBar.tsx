@@ -4,11 +4,13 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { ArrowRightIcon } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
 export default function AppBar({name,image}:any) {
     //const user = useUser();
     const pathname = usePathname();
+    const router = useRouter();
     const logout = async () => {
         signOut({callbackUrl : '/'})
     }
@@ -18,7 +20,9 @@ export default function AppBar({name,image}:any) {
             <p className="text-2xl text-white">WebWise</p>
             <div className="flex  space-x-6">
                 {pathname !== '/dashboard' && <div className="items-center flex space-x-4">
-                    <p className="text-sm text-white/60 hover:text-white smooth cursor-pointer">Snippet</p>
+                    <button className="text-sm text-white/60 hover:text-white smooth cursor-pointer" onClick={() => {
+                        router.push('/snippet');
+                    }}>Snippet</button>
                     <Link prefetch href={'/dashboard'} className="flex items-center justify-center space-x-2 group">
                         <button className="text-sm text-white/60 group-hover:text-white smooth">Dashboard</button>
                         <ArrowRightIcon className="h-4 w-4 stroke-white/60 group-hover:stroke-white smooth" />
