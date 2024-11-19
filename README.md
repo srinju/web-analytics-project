@@ -41,6 +41,7 @@ the user dont add in already added websites and the https should not be there to
   8. Make a settings page , when the user clicks on the generate api key , it
      generates an api ket and block of code to add to their codebase so that
      they can send request to our custom events api endpoint.
+     
 
 # MAJOR THING TO DO > 
 -- when user is created an api key should also be generated and it should get stored in the database for that user as the api key( for the custom events functionality).
