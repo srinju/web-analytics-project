@@ -35,9 +35,14 @@ the user dont add in already added websites and the https should not be there to
         to send request to our api endpoint which will store all the custom
         events in the database.
   6. Make the custom events tab (ui)
+  7. Make the settings page for the custom events guide with the api key of the
+     user present in the setitngs . blocks of code for sending the request to
+     our cusotom events api endpoint with the api key , and with a guide.
 
 # MAJOR THING TO DO > 
 -- when user is created an api key should also be generated and it should get stored in the database for that user as the api key( for the custom events functionality).
+
+--Make the description of the events table optional 
      
    
      
