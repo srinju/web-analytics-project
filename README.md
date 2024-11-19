@@ -21,6 +21,11 @@ the user dont add in already added websites and the https should not be there to
 13. Make the monitoring data in the page after the first page view.
 14. create a api route for the get pageview and get visits
 15. fetch the visits and page view
+16.  Make a settings page , when the user clicks on the generate api key , it
+     generates an api ket and block of code to add to their codebase so that
+     they can send request to our custom events api endpoint.
+17. Create a route for generating a new api key .
+
      
    
   
@@ -38,10 +43,7 @@ the user dont add in already added websites and the https should not be there to
   7. Make the settings page for the custom events guide with the api key of the
      user present in the setitngs . blocks of code for sending the request to
      our cusotom events api endpoint with the api key , and with a guide.
-  8. Make a settings page , when the user clicks on the generate api key , it
-     generates an api ket and block of code to add to their codebase so that
-     they can send request to our custom events api endpoint.
-  9. Create a route for generating a new api key .
+  8.
      
 
 # MAJOR THING TO DO > 
