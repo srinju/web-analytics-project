@@ -43,7 +43,8 @@ the user dont add in already added websites and the https should not be there to
   7. Make the settings page for the custom events guide with the api key of the
      user present in the setitngs . blocks of code for sending the request to
      our cusotom events api endpoint with the api key , and with a guide.
-  8. Deply
+  8. Deploy
+  9. Chnage the loacl hosts urls to deployed url after deploying
      
 
 # MAJOR THING TO DO > 
