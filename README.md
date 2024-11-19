@@ -31,7 +31,9 @@ the user dont add in already added websites and the https should not be there to
   3. Make the top Visit sources ui
   4. Make the custom event functionality->
      1.define events schema in prisma
-     2.
+     2. Make a api endpoint where the user with their own api key will be able
+        to send request to our api endpoint which will store all the custom
+        events in the database.
   6. Make the custom events tab (ui)
      
    
