@@ -25,11 +25,9 @@ the user dont add in already added websites and the https should not be there to
      generates an api ket and block of code to add to their codebase so that
      they can send request to our custom events api endpoint.
 17. Create a route for generating a new api key .
+18. make the grouped page views functionality .
 
-     
-   
-  
-   
+
  # TODO>>
   1. recheck the api/track endpoint (it may throw ERROR)
   2. Make the top visit sources functionality
