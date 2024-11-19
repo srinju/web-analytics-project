@@ -37,7 +37,7 @@ export async function POST(req : Request) {
         })
     }
     const res = await req.json(); //get the payload
-    const { domain , url , event} = res;
+    const { domain , url , event , source} = res;
     try {
         if(!url.includes(domain)) { //check thath the data domain matches with the data domain the user wants to monitor the website for
             return NextResponse.json({
@@ -50,7 +50,8 @@ export async function POST(req : Request) {
             await prisma.visits.create({
                 data : {
                     website_id : domain,
-                    userid : session.user.id
+                    source : source ?? "Direct"
+                    //userid : session.user.id
                 }
             });
         }
@@ -59,7 +60,7 @@ export async function POST(req : Request) {
                 data : {
                     domain : domain,
                     page : url,
-                    userid : session.user.id
+                    //userid : session.user.id
                 }
             });
         }

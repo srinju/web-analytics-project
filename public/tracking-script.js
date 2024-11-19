@@ -12,6 +12,8 @@
     var dataDomain = scriptElement.getAttribute('data-domain'); //take the attribute in the script called data-domain which contains a domain string used for tracking 
 
     let queryString = location.search;
+    const params = new URLSearchParams(queryString);
+    var source = params.get("utm");
 
     var endpoint = "http://localhost:3000/api/track";
 
@@ -72,7 +74,8 @@
         var payload = {
             event : eventName,
             url : location.href,
-            domain : dataDomain
+            domain : dataDomain,
+            source: source
         }
         sendRequest(payload,options);
     }
