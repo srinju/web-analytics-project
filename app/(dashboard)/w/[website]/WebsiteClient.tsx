@@ -164,7 +164,7 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
     }
 
     return(
-        <div className="bg-black text-white min-h-screen w-full items-start justify-start flex flex-col">
+        <div className="bg-black text-white min-h-screen w-full items-center justify-center flex flex-col">
             <AppBar name={session.name} />
             {pageViews?.length == 0 && totalVisits.length ==0 && !loading ? <div className="w-full items-center justify-center
              flex flex-col space-y-6 z-40 relative min-h-screen px-4">
@@ -181,29 +181,74 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
                             {/* SCRIPT  PART */}
                         </div>
                 </div>
-             </div> : <div className="w-full justify-center flex items-center">
+             </div> :
+             <div className="z-40 w-[95%] md:w-3/4 lg:2/3 min-h-screen py-6 border-x border-white/10 items-center justify-start flex flex-col">
+              <div className="w-full justify-center flex items-center">
                 <Tabs defaultValue="general" className="w-full items-center justify-center flex flex-col">
                     <TabsList className="w-full bg-transparent mb-4 items-start justify-start flex">
                         <TabsTrigger value="general">General</TabsTrigger>
                         <TabsTrigger value="custom events">Custom Events</TabsTrigger>
                     </TabsList>
-                    <TabsContent value="general">
+                    <TabsContent value="general" className="w-full">
                         <div className="w-full grid grid-cols-1 md:grid-cols-2 px-4 gap-6">
                             <div className="bg-black border-white/10 border text-white text-center">
-                                <p className="text-white/70 font-medium py-8 w-full text-center border-b border-white/10 ">TOTAL VISITS</p>
-                                <p className="py-12 text-3xl lg:text-4xl font-bold bg-[#050505]">
+                                <p className="text-white/70 font-bold py-8 w-full text-center border-b border-white/10  ">TOTAL VISITS</p>
+                                <p className="py-12 text-3xl lg:text-4xl font-bold bg-[#1c1c1c]">
                                     {abbreviateNumber(totalVisits?.length)}
                                 </p>
                             </div>
                             <div className="bg-black border-white/10 border text-white text-center">
-                                <p>PAGE VIEWS</p>
+                                <p className="text-white/70 font-bold py-8 w-full text-center border-b border-white/10 ">PAGE VIEWS</p>
+                                <p className="py-12 text-3xl lg:text-4xl font-bold bg-[#1c1c1c]">
+                                    {abbreviateNumber(pageViews?.length)}
+                                </p>
                             </div>
                         </div>
-                        
+                        <div className="items-center justify-center grid grid-cols-1 bg-black lg:grid-cols-2 mt-12 w-full border-y border-white/10">
+                            {/* TOP PAGES*/}
+                            <div className="flex flex-col bg-black z-40 h-full w-full">
+                                <h1 className="text-white/70 py-6 w-full text-center border-b border-white/10">Top Pages</h1>
+                                {groupedPageViews.map(view => (
+                                    <div  className="text-white w-full items-center justify-between px-6 py-4 border-b border-white/10 flex">
+                                        <div>
+                                            <p>{view.page}</p>
+                                        </div>
+                                        <div>
+                                            <p>{abbreviateNumber(view.visits)}</p>
+                                        </div>
+                                    </div>    
+                                ))}
+                            </div>
+                            {/*TOP SOURCES*/}
+                            <div className=" flex flex-col bg-black z-40 h-full w-full lg:border-1 border-t lg:border-t-0 border-white/10">
+                                <h1 className="text-white/70 py-6 w-full text-center border-b border-white/10">
+                                    Top Visit Sources
+                                    <p className="absolute bottom-2 right-2 text-[10px] italic font-light">add ? utm={"{source}"} to track</p>
+                                </h1>
+                                {/*groupedPageViewsSources.map((pageSource) => (
+                                    <div
+                                        key={pageSource}
+                                        className="text-white w-full items-center justify-between px-6 py-4 border-b border-white/10 flex"
+                                    >
+                                        <p className="text-white/70 font-light">
+                                            /{pageSource.source}
+                                        </p>
+                                        <p className="text-white/70 font-light">
+                                            <p className="">
+                                                {abbreviateNumber(pageSource.visits)}
+                                            </p>
+                                        </p>
+                                    </div>
+                                ))*/}
+                            </div>
+                        </div>
                     </TabsContent>
                     <TabsContent value="custom events">Change your password here.</TabsContent>
                 </Tabs>
-                </div>}
+                </div>
+            </div>
+                }
+            
         </div>
     )
 }

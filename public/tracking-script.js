@@ -10,6 +10,9 @@
     var document = window.document; //current window document that is the DOM
     var scriptElement = document.currentScript; //grabs the script tag that is currently running
     var dataDomain = scriptElement.getAttribute('data-domain'); //take the attribute in the script called data-domain which contains a domain string used for tracking 
+
+    let queryString = location.search;
+
     var endpoint = "http://localhost:3000/api/track";
 
     function generateSessionId () { //generating a random session id
