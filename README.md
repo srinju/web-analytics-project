@@ -1,4 +1,4 @@
-web analytics tool for your web appplications
+web analytics tool for your web appplications. Monitor your website , user behaviour, user interaction , traffic and many more .
 
 # STEPS IMPLEMENTED >
 
