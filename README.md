@@ -15,16 +15,22 @@ the user dont add in already added websites and the https should not be there to
 9. Add a api endpoint where all the tracking data and goes and gets stored in the database
 10. update the dashboard page and fetch the websites registered by the user from the database to the dashboard
 11. Make the pageview<1 page as waiting for the first page view
+12. make the w/dynamic website page where all the traffic/monitoring data of the website is rendered for that particular registered website, it is shown whenever the pageView
+     is greater than 0 , if not it will show a page  as waiting for the first page view
+     (client to server component handling in the dynamic website page)
+13. Make the monitoring data in the page after the first page view.
+14. create a api route for the get pageview and get visits
+15. fetch the visits and page view
+     
+   
+  
    
  # TODO>>
   1. recheck the api/track endpoint (it may throw ERROR)
-  2. make the w/dynamic website page where all the traffic/monitoring data of the website      is rendered for that particular registered website, it is shown whenever the pageView
-     is greater than 0 , if not it will show a page  as waiting for the first page view
-     (client to server component handling in the dynamic website page)
-     
-  3. Make the monitoring data in the page after the first page view.
-  4. create a api route for the get pageview and get visits
-  5. fetch the visits and page view
+  2. Make the top visit sources functionality
+  3. Make the top Visit sources ui
+  4. Make the custom event functionality
+  5. Make the custom events tab (ui)
      
    
      
