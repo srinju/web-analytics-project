@@ -29,8 +29,10 @@ the user dont add in already added websites and the https should not be there to
   1. recheck the api/track endpoint (it may throw ERROR)
   2. Make the top visit sources functionality
   3. Make the top Visit sources ui
-  4. Make the custom event functionality
-  5. Make the custom events tab (ui)
+  4. Make the custom event functionality->
+     1.define events schema in prisma
+     2.
+  6. Make the custom events tab (ui)
      
    
      
