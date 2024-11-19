@@ -18,6 +18,7 @@ model User {
   email String @unique
   name String 
   password String
+  apikey String?
   websites Website[]
   //visits Visits[]
   //page_views Page_view[]
