@@ -4,6 +4,14 @@ import AppBar from "@/app/components/AppBar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { redirect, useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+  } from "@/components/ui/carousel"
+  
 
 interface WebsiteClientProps {
     //website : string,
@@ -146,6 +154,11 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
         }
     }
 
+    const formatTimeStamp = (date : any) => {
+        const formattedTimeStamp = date.toLocalString();
+        return formattedTimeStamp;
+    }
+
     if(loading) {
         return <div className="bg-black text-white min-h-screen w-full items-start justify-start flex flex-col">
             <AppBar name = {session.name}/>
@@ -235,13 +248,44 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
                             </div>
                         </div>
                     </TabsContent>
-                    <TabsContent value="custom events" className="w-full"></TabsContent>
-                    
+                    <TabsContent value="custom events" className="w-full">
+                    {groupedCustomEvents && <Carousel className="w-full px-4">
+                            <CarouselContent>
+                                {Object.entries(groupedCustomEvents).map(
+                                    ([eventName  , count]) => (
+                                        <CarouselItem 
+                                            key={`${eventName}-${count}`}
+                                            className="basis-1/2"
+                                        >
+                                            <div className="bg-black smooth group hover:border-white/20 text-white text-center border" >
+                                                <p className="text-white/70 font-medium py-8 w-full group-hover:border-white/20 smooth text-center border-b ">                                                                                                              
+                                                    {eventName}
+                                                </p>
+                                                <p className="py-12 text-3xl lg:text-4xl font-bold bg-[#050505]">
+                                                    {count}
+                                                </p>
+                                            </div>
+                                        </CarouselItem>
+                                    )
+                                )}
+                            </CarouselContent>
+                            <CarouselPrevious />
+                            <CarouselNext />
+                        </Carousel>}
+                        <div className="items-center justify-center bg-black mt-12 w-full border-y border-white/10 relative">
+                                {customEvents.map((event : any) => (
+                                    <div className="text-white w-full items-start justify-start px-6 py-12 border-b border-white/10 flex flex-col relative">
+                                        <p className="text-white/70 font-light pb-3">{event.event_name}</p>
+                                        <p>{event.message}</p>
+                                        <p className="italic absolute right-2 bottom-2 text-xs text-white/50">{formatTimeStamp(event.created_at)}</p>
+                                    </div>
+                                ))}
+                        </div>
+                    </TabsContent>
                 </Tabs>
                 </div>
             </div>
-                }
-            
+                }           
         </div>
     )
 }
