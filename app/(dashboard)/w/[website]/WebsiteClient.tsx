@@ -37,6 +37,10 @@ interface GroupedPageView {
     visits: number; 
 }
 
+interface groupedPageViewsSourcesProps {
+    source : string | null,
+    visits : number
+}
 
 export default function WebsiteClient({session} : WebsiteClientProps) {
     //const params  = useParams();
@@ -49,7 +53,7 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
     const [totalVisits , setTotalVisits] = useState<Visit[]>([]);
     const [groupedPageViews , setGroupedPageViews] = useState<GroupedPageView[]>([]);
     const [customEvents , setCustomEvents] = useState([]);
-    const [groupedPageViewsSources,setGroupedPageViewsSources] = useState([]);
+    const [groupedPageViewsSources,setGroupedPageViewsSources] = useState<groupedPageViewsSourcesProps[]>([]);
     const [groupedCustomEvents , setGroupedCustomEvents] = useState([]);
     const router = useRouter();
 
@@ -61,28 +65,6 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
         if(!session) {
             return redirect('/api/auth/signin');
         }
-        /*    
-        const checkWebsiteCurrentUser = async () => { //check website for the current website registered for the user or not 
-            console.log("checking if website belongs to current user ",website);
-            
-            const websiteData = await prisma.website.findFirst({
-                where : {
-                    website_name  : website,
-                    userid : session.id
-                }
-            });
-            console.log("the website data from the useeffect is ",websiteData);
-            if(!websiteData) {
-                redirect('/dashboard');
-            } else {
-                setTimeout(() => {
-                    fetchViews();
-                },500);
-            }
-        };
-        checkWebsiteCurrentUser();
-        */
-
         const fetchViews  = async() => {
             setLoading(true);
             console.log('website that is gonna show the analytics for ' , website);
@@ -107,10 +89,18 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
                 if(!data.websiteData) {
                     router.push('/dashboard');
                 }
+                const customEventsData = data.events;
                 setPageViews(data.views || []);
                 setGroupedPageViews(groupPageViews(data.views || []));
                 setTotalVisits(data.visits || []);
                 setCustomEvents(data.events);
+                setCustomEvents(customEventsData);
+                setGroupedCustomEvents( //group the custom events by name 
+                    customEventsData.reduce((acc : any, event : any) => {
+                    acc[event.event_name] = (acc[event.event_name] || 0) + 1;
+                    return acc;
+                    }, {})
+                );
             } catch(error) {
                 console.error("error occured while in fetchViews function" , error);
             } finally {
@@ -227,7 +217,7 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
                                     Top Visit Sources
                                     <p className="absolute bottom-2 right-2 text-[10px] italic font-light">add ? utm={"{source}"} to track</p>
                                 </h1>
-                                {/*groupedPageViewsSources.map((pageSource) => (
+                                {groupedPageViewsSources.map((pageSource : any) => (
                                     <div
                                         key={pageSource}
                                         className="text-white w-full items-center justify-between px-6 py-4 border-b border-white/10 flex"
@@ -241,11 +231,12 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
                                             </p>
                                         </p>
                                     </div>
-                                ))*/}
+                                ))}
                             </div>
                         </div>
                     </TabsContent>
-                    <TabsContent value="custom events">Change your password here.</TabsContent>
+                    <TabsContent value="custom events" className="w-full"></TabsContent>
+                    
                 </Tabs>
                 </div>
             </div>
