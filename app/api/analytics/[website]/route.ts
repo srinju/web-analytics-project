@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import {  NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 
 const prisma  = new PrismaClient();
@@ -9,9 +9,8 @@ export interface RouteSegmentConfig {
         website : string
     }
 }
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export  async function GET( { params } : any ) {
+export  async function GET(req : NextRequest , { params } : any ) {
     
     const {website} = await params;
     console.log("api called for website ", website);
