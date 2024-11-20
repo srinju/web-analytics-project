@@ -26,23 +26,24 @@ the user dont add in already added websites and the https should not be there to
      they can send request to our custom events api endpoint.
 17. Create a route for generating a new api key .
 18. make the grouped page views functionality .
-
-
- # TODO>>
-  1. recheck the api/track endpoint (it may throw ERROR)
-  2. Make the top visit sources functionality
-  3. Make the top Visit sources ui
-  4. Make the custom event functionality->
+19. Make the top visit sources functionality
+20. Make the top Visit sources ui
+21. Make the custom event functionality->
      1.define events schema in prisma
      2. Make a api endpoint where the user with their own api key will be able
         to send request to our api endpoint which will store all the custom
         events in the database.
-  6. Make the custom events tab (ui)
-  7. Make the settings page for the custom events guide with the api key of the
+22. Make the custom events tab (ui)
+23. Make the settings page for the custom events guide with the api key of the
      user present in the setitngs . blocks of code for sending the request to
      our cusotom events api endpoint with the api key , and with a guide.
-  8. Deploy
-  9. Chnage the loacl hosts urls to deployed url after deploying
+
+
+ # TODO>>
+  1. recheck the api/track endpoint (it may throw ERROR)
+  2. Deploy
+  3. Chnage the loacl hosts urls to deployed url after deploying
+  4. fix basic issues before prod
      
 
 # MAJOR THING TO DO > 
