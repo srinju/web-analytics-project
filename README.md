@@ -52,8 +52,6 @@ the user dont add in already added websites and the https should not be there to
      
      
 
-# MAJOR THING TO DO > 
---Make the description of the events table optional 
      
    
      
