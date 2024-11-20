@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
 
 const prisma  = new PrismaClient();
@@ -10,7 +10,7 @@ export interface RouteSegmentConfig {
     }
 }
 
-export  async function GET(req : NextRequest , { params } : any ) {
+export  async function GET( { params } : any ) {
     
     const {website} = await params;
     console.log("api called for website ", website);
