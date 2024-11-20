@@ -37,14 +37,14 @@ the user dont add in already added websites and the https should not be there to
 23. Make the settings page for the custom events guide with the api key of the
      user present in the setitngs . blocks of code for sending the request to
      our cusotom events api endpoint with the api key , and with a guide.
+24. Hyrdation issue in dashboard page
+25. Received `true` for a non-boolean attribute `cursor-text`. in settings page
 
 
  # TODO>>
   1. recheck the api/track endpoint (it may throw ERROR)
-  2. Hyrdation issue in dashboard page
-  3. Received `true` for a non-boolean attribute `cursor-text`. in settings page
-  4. Deploy
-  5. Chnage the loacl hosts urls to deployed url after deploying
+  2. Deploy
+  3. Chnage the loacl hosts urls to deployed url after deploying
      
      
 
