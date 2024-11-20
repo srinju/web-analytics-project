@@ -47,7 +47,8 @@ the user dont add in already added websites and the https should not be there to
   1. recheck the api/track endpoint (it may throw ERROR)
   2. CORS ERROR in tracking script and track api endpoint
   3. signin password checks
-  4. other users k liye add website kaam nhi kr rha h 
+  4. other users k liye add website kaam nhi kr rha h
+  5. see screenshot and update the next config file to handle the cors issue 
   
      
      
