@@ -81,7 +81,7 @@ export default  function AddWebsitePage() {
                     <span className="w-full lg:w-[50%]">
                         <textarea typeof="text" className="outline-none border-b border-white/20 w-full py-2 pr-4 bg-transparent hover:border-white/50 smooth text-white/60 cursor-text" disabled
                             value={`<script defer data-domain="${website}"
-                            src="https://webwise-psi.vercel.app/tracking-script.ts"></script>`}
+                            src="https://webwise-psi.vercel.app/tracking-script.js"></script>`}
                         />
                         <p className="text-xs text-white/100 pt-3 font-light">
                             Paste this code snippet in the <b className="text-red-600">{"<head>"}</b> of your code base of your website in the index.html file
