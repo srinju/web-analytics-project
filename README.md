@@ -41,9 +41,11 @@ the user dont add in already added websites and the https should not be there to
 
  # TODO>>
   1. recheck the api/track endpoint (it may throw ERROR)
-  2. Deploy
-  3. Chnage the loacl hosts urls to deployed url after deploying
-  4. fix basic issues before prod
+  2. Hyrdation issue in dashboard page
+  3. Received `true` for a non-boolean attribute `cursor-text`. in settings page
+  4. Deploy
+  5. Chnage the loacl hosts urls to deployed url after deploying
+     
      
 
 # MAJOR THING TO DO > 
