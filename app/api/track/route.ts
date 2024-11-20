@@ -14,7 +14,7 @@ import { NextResponse } from "next/server";
 
 //cors error fix>
 
-export const corsHeaders = {
+ const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
@@ -32,7 +32,8 @@ export async function POST(req : Request) {
         return NextResponse.json({
             messgae : "unauthorised"
         }, {
-            status : 401
+            status : 401,
+            headers : corsHeaders
         })
     }
     const res = await req.json(); //get the payload
