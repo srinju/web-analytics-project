@@ -122,7 +122,6 @@ export default function SettingsPageClient({session} : SettingsPageClientProps) 
                                 type="text"
                                 readOnly
                                 disabled 
-                                cursor-text
                                 className="outline-none border-b border-white/20 w-full px-4 py-1 bg-[#252525]" 
                                 value={apikey}
                             />
