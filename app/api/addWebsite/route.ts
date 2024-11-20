@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function POST(req : Request ){
-    
+    console.log("API api/addWebsite is called");
     const session  = await getServerSession(authOptions);
     if(!session) {
         return NextResponse.json({
@@ -24,6 +24,7 @@ export async function POST(req : Request ){
             }
         });
         if(existingWebsite){
+            console.log("Error : Website already exisits");
             return NextResponse.json({
                 message : "this domain already exisits!!"
             }, {
@@ -36,16 +37,17 @@ export async function POST(req : Request ){
                 userid : session.user.id
             }
         });
+        console.log("New website created ", newWebsite);
         return NextResponse.json({
             newWebsite,
             message : "website added successfully!!"
         },{
             status : 200
         });
-    } catch(err : any){
+    } catch(err){
+        console.error("error occured ",err);
         return NextResponse.json({
             message : "faliled to add website",
-            error : err.message
         },{
             status : 500
         });

@@ -6,8 +6,11 @@ import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
+interface AppBarProps {
+    name : string
+}
 
-export default function AppBar({name,image}:any) {
+export default function AppBar({name}:AppBarProps) {
     //const user = useUser();
     const pathname = usePathname();
     const router = useRouter();

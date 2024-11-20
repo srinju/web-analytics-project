@@ -20,7 +20,6 @@ interface WebsiteClientProps {
     session : {
         name : string,
         email : string,
-        password : string,
         id : string
     }
 }
@@ -51,6 +50,12 @@ interface groupedPageViewsSourcesProps {
     visits : number
 }
 
+interface CustomEvent {
+    event_name: string;
+    message: string;
+    created_at: Date;
+}
+
 export default function WebsiteClient({session} : WebsiteClientProps) {
     //const params  = useParams();
     //website gets the current domain of the user for monitoring reads
@@ -62,7 +67,7 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
     const [totalVisits , setTotalVisits] = useState<Visit[]>([]);
     const [groupedPageViews , setGroupedPageViews] = useState<GroupedPageView[]>([]);
     const [customEvents , setCustomEvents] = useState([]);
-    const [groupedPageViewsSources,setGroupedPageViewsSources] = useState<groupedPageViewsSourcesProps[]>([]);
+    const [groupedPageViewsSources] = useState<groupedPageViewsSourcesProps[]>([]);
     const [groupedCustomEvents , setGroupedCustomEvents] = useState([]);
     const router = useRouter();
 
@@ -105,7 +110,7 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
                 setCustomEvents(data.events);
                 setCustomEvents(customEventsData);
                 setGroupedCustomEvents( //group the custom events by name 
-                    customEventsData.reduce((acc : any, event : any) => {
+                    customEventsData.reduce((acc : Record<string, number>, event : { event_name: string }) => {
                     acc[event.event_name] = (acc[event.event_name] || 0) + 1;
                     return acc;
                     }, {})
@@ -124,15 +129,15 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
             router.push('/dashboard');
         }
 
-    },[session,website]);
+    },[session,website,router]);
 
     
 
     //This function groups URLs by page path and counts the number of visits per path, returning a simplified list of unique pages and their respective visit counts.
 
-    function groupPageViews(pageViews : any) {
-        const groupedPageViews : any = {};
-        pageViews.forEach(({page} : any)  => {
+    function groupPageViews(pageViews : PageView[]):GroupedPageView[] {
+        const groupedPageViews : Record<string, number> = {};
+        pageViews.forEach(({page})  => {
             //extract the path from the page URL by removing the protocol and the hostname
             const path = page.replace(/^(?:\/\/|[^/]+)*\//,"");
             // increment the visit count for the page path
@@ -155,8 +160,8 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
         }
     }
 
-    const formatTimeStamp = (date : any) => {
-        const formattedTimeStamp = date.toLocalString();
+    const formatTimeStamp = (date : Date) => {
+        const formattedTimeStamp = date.toLocaleString();
         return formattedTimeStamp;
     }
 
@@ -215,7 +220,7 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
                             <div className="flex flex-col bg-black z-40 h-full w-full">
                                 <h1 className="text-white/70 py-6 w-full text-center border-b border-white/10">Top Pages</h1>
                                 {groupedPageViews.map(view => (
-                                    <div  className="text-white w-full items-center justify-between px-6 py-4 border-b border-white/10 flex">
+                                    <div key={view.page}  className="text-white w-full items-center justify-between px-6 py-4 border-b border-white/10 flex">
                                         <div>
                                             <p>{view.page}</p>
                                         </div>
@@ -231,9 +236,9 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
                                     Top Visit Sources
                                     <p className="absolute bottom-2 right-2 text-[10px] italic font-light">add ? utm={"{source}"} to track</p>
                                 </h1>
-                                {groupedPageViewsSources.map((pageSource : any) => (
+                                {groupedPageViewsSources.map((pageSource : groupedPageViewsSourcesProps) => (
                                     <div
-                                        key={pageSource}
+                                        key={pageSource.source}
                                         className="text-white w-full items-center justify-between px-6 py-4 border-b border-white/10 flex"
                                     >
                                         <p className="text-white/70 font-light">
@@ -274,8 +279,10 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
                             <CarouselNext />
                         </Carousel>}
                         <div className="items-center justify-center bg-black mt-12 w-full border-y border-white/10 relative">
-                                {customEvents.map((event : any) => (
-                                    <div className="text-white w-full items-start justify-start px-6 py-12 border-b border-white/10 flex flex-col relative">
+                                {customEvents.map((event : CustomEvent , index : number) => (
+                                    <div
+                                        key={`${event.event_name}-${index}`} 
+                                        className="text-white w-full items-start justify-start px-6 py-12 border-b border-white/10 flex flex-col relative">
                                         <p className="text-white/70 font-light pb-3">{event.event_name}</p>
                                         <p>{event.message}</p>
                                         <p className="italic absolute right-2 bottom-2 text-xs text-white/50">{formatTimeStamp(event.created_at)}</p>

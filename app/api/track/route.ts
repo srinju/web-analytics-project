@@ -12,19 +12,6 @@ import { NextResponse } from "next/server";
 //if event is session start then add the record to the visits table
 //if the event is pageview then add the record to the page view table
 
-
-//handle cors policy erorr>
-
-export const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  };
-  
-  export async function OPTIONS() {
-    return NextResponse.json({}, { headers: corsHeaders });
-  }
-
 const prisma  = new PrismaClient();
 
 export async function POST(req : Request) {
@@ -43,7 +30,7 @@ export async function POST(req : Request) {
             return NextResponse.json({
                 error : "the script points to a different domain than the current url.make , sure they match?"
             },{
-                headers : corsHeaders
+                status : 401
             });
         }
         if(event == "session_start") { //create entry in visits for session start for user
@@ -69,9 +56,9 @@ export async function POST(req : Request) {
             res
         },{
             status : 200,
-            headers : corsHeaders
         })
     } catch (error) {
+        console.error("error occured ",error);
         return NextResponse.json({
             message : "an error occured occured while inserting tracking data in the database"
         }, {

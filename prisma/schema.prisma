@@ -18,7 +18,7 @@ model User {
   email String @unique
   name String 
   password String
-  apikey String?
+  apikey String? @unique
   websites Website[]
   //visits Visits[]
   //page_views Page_view[]
@@ -57,6 +57,6 @@ model Events {
   created_at DateTime @default(now())
   event_name String
   website_id String
-  message String
+  message String?
   website Website @relation(fields: [website_id] , references: [website_name])
 }

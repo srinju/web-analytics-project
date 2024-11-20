@@ -11,7 +11,9 @@ const signinSchema = z.object({
     email : z.string().email("Invalid email address").nonempty("email field is required"),
     password : z.string().min(6,"password should be atleast of 6 charecters").nonempty("password field is required")
 });
+
 const prisma = new PrismaClient();
+
 export const authOptions  = {
     providers : [
         CredentialsProvider({

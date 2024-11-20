@@ -27,7 +27,8 @@ export async function GET() {
         },{
             status : 200
         });
-    } catch (error : any) {
+    } catch (error) {
+        console.error("error occured ",error);
         return NextResponse.json({
             message : "error occured while fetching the websites"
         }, {

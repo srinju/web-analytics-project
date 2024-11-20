@@ -27,7 +27,7 @@ export default function SettingsPageClient({session} : SettingsPageClientProps) 
         if(!session) {
             router.push('/api/auth/signin');
         }
-    },[session]);
+    },[session,router]);
 
     //this api checks if there is api key for your account , if there is not then it creates one for you.
     const getUserAPI = async () => {

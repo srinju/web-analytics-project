@@ -1,4 +1,3 @@
-import AppBar from "@/app/components/AppBar";
 import SettingsPageClient from "@/app/components/SettingsPageClient";
 import { authOptions } from "@/app/lib/auth";
 import { getServerSession } from "next-auth";

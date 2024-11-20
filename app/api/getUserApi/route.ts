@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function GET(req : Request) {
+export async function GET() {
     const session = await getServerSession(authOptions);
     if(!session){
         return NextResponse.json({

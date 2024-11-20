@@ -22,19 +22,25 @@ export default  function AddWebsitePage() {
                 },
                 body : JSON.stringify({website})
             });
+            console.log("API repsonse ",response);
             if(response.status === 409){
                 setError("This domain is already added!");
             } else if (!response.ok){
                 throw new Error("Failed to add Website!!");
             } else {
-                const data = await response.json();
+                //const data = await response.json();
                 setError("");
                 setLoading(false);
                 setStep(2);
             }  
-        } catch (error : any) {
-            console.error("error occured while checking domain!!" , error)
-            setError("An error occured , Please try again!!");
+        } catch (error : unknown) {
+            if (error instanceof Error) {
+                console.error("error occurred while checking domain!!", error.message);
+                setError("An error occurred, Please try again!!");
+            } else {
+                console.error("Unknown error occurred:", error);
+                setError("An unexpected error occurred. Please try again!!");
+            }
         } 
     }
 

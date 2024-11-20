@@ -1,12 +1,18 @@
 import { PrismaClient } from "@prisma/client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 
 const prisma  = new PrismaClient();
 
-export  async function GET(req : Request , {params} : {params : {website : string}}) {
+export interface RouteSegmentConfig {
+    params : {
+        website : string
+    }
+}
+
+export  async function GET(req : NextRequest , { params } : any ) {
     
-    const {website} =  params;
+    const {website} = await params;
     console.log("api called for website ", website);
     if(!website) {
         return NextResponse.json({

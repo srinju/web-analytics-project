@@ -10,7 +10,7 @@ const Signup = () => {
         password: ''
       });
     const router = useRouter();
-    const handleSubmit = async(e : any) => {
+    const handleSubmit = async(e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             console.log("form dataa that is being sent ",formData);
@@ -30,7 +30,7 @@ const Signup = () => {
             console.error("an error occured" , err);
         }
     }
-    const handleChange = (e : any) => {
+    const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name] : e.target.value

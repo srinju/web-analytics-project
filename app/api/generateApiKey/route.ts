@@ -12,7 +12,7 @@ function generateApiKey() : string { //function to generate api key
     return randomBytes(32).toString("hex");
 }
 
-export async function POST(req :Request) {
+export async function POST() {
     const session = await getServerSession(authOptions);
     if(!session){
         return NextResponse.json({
@@ -40,10 +40,10 @@ export async function POST(req :Request) {
         },{
             status : 200
         });
-    } catch (error:any) {
-        console.error("an error occured while generating the api key " , error.message);
+    } catch (error) {
+        console.error("an error occured while generating the api key " , error);
         return NextResponse.json({
-            error : "internal server error"
+            message : "internal server error"
         },{
             status : 500
         });

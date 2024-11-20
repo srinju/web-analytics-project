@@ -3,7 +3,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { sunburst } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export const CodeComp = () => {
-    let codeString = `
+    const  codeString = `
  const url = "https://localhost:3000/api/events";
   const headers = {
     "Content-Type": "application/json",
