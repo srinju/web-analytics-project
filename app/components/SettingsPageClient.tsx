@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 import AppBar from "./AppBar";
 import { CodeComp } from "./CodeComp";
-
+import Loader from "@/app/components/Loader";
 
 interface SettingsPageClientProps  {
     session : {
@@ -96,10 +96,10 @@ export default function SettingsPageClient({session} : SettingsPageClientProps) 
     },[session]);
 
     if(loading) {
-        return <div className="bg-black min-h-screen w-full items-center text-3xl font-bold animate-pulse">
+        return <div className="bg-black min-h-screen w-full items-center text-3xl font-bold ">
             <AppBar name={session.name} />
             <div className="min-h-screen w-full font-bold text-3xl items-center justify-center flex text-white relative animate-pulse">
-                Loading ...
+                <Loader />
             </div>
         </div>
     }
@@ -116,7 +116,7 @@ export default function SettingsPageClient({session} : SettingsPageClientProps) 
                             Generate API Key
                     </button> }
                     {apikey && <div className="mt-12 border-white/10 border bg-[#131313] space-y-12 lg:w-1/2  py-12 w-full  md:w-3/4 ">
-                        <div className="space-y-12 px-4 ">
+                        <div className="space-y-12 px-4 items-center">
                             <p>Your API Key :</p>
                             <input 
                                 type="text"
@@ -124,13 +124,13 @@ export default function SettingsPageClient({session} : SettingsPageClientProps) 
                                 disabled 
                                 className="outline-none border-b border-white/20 w-full px-4 py-1 bg-[#252525]" 
                                 value={apikey}
-                            />
+                            />                           
                             <button 
                                 type="button" 
                                 onClick={copyApiKey} 
                                 className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 justify-center">
-                                     {buttonText}
-                            </button> 
+                                    {buttonText}
+                            </button>                                                 
                         </div>
                         <div className="space-y-4 border-t border-white/10 bg-[#131313] p-6">
                             <h1>You can Create Cusotom using Our API as instructed below :-</h1>

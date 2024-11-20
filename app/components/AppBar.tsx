@@ -15,9 +15,9 @@ export default function AppBar({name,image}:any) {
         signOut({callbackUrl : '/'})
     }
     return (
-        <div className=" w-full border-b border-white/20 sticky top-0 bg-black z-50 bg-opacity-20 filter backdrop-blur-lg flex items-center justify-between px-6 ">
+        <div className=" w-full border-b border-white/20 sticky top-0 bg-slate-800 z-50 bg-opacity-20 filter backdrop-blur-lg flex items-center justify-between px-6 ">
             {/*Logo*/}
-            <p className="text-2xl text-white">WebWise</p>
+            <p className="text-2xl text-white italic font-extrabold">WebWise</p>
             <div className="flex  space-x-6">
                 {pathname !== '/dashboard' && <div className="items-center flex space-x-4">
                     <button className="text-sm text-white/60 hover:text-white smooth cursor-pointer" onClick={() => {

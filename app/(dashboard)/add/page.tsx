@@ -38,30 +38,6 @@ export default  function AddWebsitePage() {
         } 
     }
 
-    /*
-    const checkDomainAddedBefore = async () => {
-        let fetchedWebsites = [];
-        try {
-            const response = await fetch('/api/getWebsite');
-            const data = await response.json();
-            if(response.ok){
-                fetchedWebsites = data.presentWebsites;
-                if(
-                    fetchedWebsites.filter((item : any) => item.website_name == website).length > 0 //this means we have duplicate domains entered
-                ) {
-                    setError("This domain is added before!");
-                } else {
-                    setError("");
-                    handleAddWebsite(); // after all the checks add the website 
-                }
-            }
-        } catch (error) {
-            console.error("Error checking domain!!" , error);
-            setError("An error occured , please try again!!");
-        }
-    }
-    */
-
     useEffect(() => { //more error handling 
         if(
             website.trim().includes("http") ||

@@ -11,6 +11,7 @@ import {
     CarouselNext,
     CarouselPrevious,
   } from "@/components/ui/carousel"
+import Loader from "@/app/components/Loader";
   
 
 interface WebsiteClientProps {
@@ -163,7 +164,7 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
         return <div className="bg-black text-white min-h-screen w-full items-start justify-start flex flex-col">
             <AppBar name = {session.name}/>
             <div className="min-h-screen w-full items-center justify-center flex text-white relative">
-                Loading ...
+                <Loader />
             </div>
         </div>
     }
