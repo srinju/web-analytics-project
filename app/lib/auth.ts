@@ -23,6 +23,7 @@ export const authOptions  = {
                 email : {label : "Email"  , type : "text" , placeholder : "abcd@gmail.com" , requried : true},
                 password : {label : "Password" , type : "password" , required : true}
             },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             async authorize(credentials : any) {
                 try {
                     //zod validate>
@@ -57,6 +58,7 @@ export const authOptions  = {
     secret : process.env.JWT_SECRET || "secret",
     
     callbacks : {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         async session({token , session} : any) {
             session.user.id = token.sub
             return session;

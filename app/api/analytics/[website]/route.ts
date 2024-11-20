@@ -10,6 +10,7 @@ export interface RouteSegmentConfig {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export  async function GET( { params } : any ) {
     
     const {website} = await params;
