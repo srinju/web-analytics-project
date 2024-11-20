@@ -110,6 +110,7 @@ export default function WebsiteClient({session} : WebsiteClientProps) {
                 setPageViews(data.views || []);
                 setGroupedPageViews(groupPageViews(data.views || []));
                 setTotalVisits(data.visits || []);
+                setCustomEvents(data.events);
             } catch(error) {
                 console.error("error occured while in fetchViews function" , error);
             } finally {

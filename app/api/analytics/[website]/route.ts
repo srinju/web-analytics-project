@@ -44,10 +44,17 @@ export  async function GET(req : Request , {params} : {params : {website : strin
                 website_id : website
             }
         });
+
+        const events = await prisma.events.findMany({
+            where :{
+                website_id : website
+            }
+        });
         return NextResponse.json({
             message : "analytics fetched successfully!",
             views,
             visits,
+            events,
             websiteData
         },{
             status : 200
