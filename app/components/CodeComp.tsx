@@ -4,7 +4,7 @@ import { sunburst } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export const CodeComp = () => {
     const  codeString = `
- const url = "https://localhost:3000/api/events";
+ const url = "https://webwise-psi.vercel.app/api/events";
   const headers = {
     "Content-Type": "application/json",
     Authorization: "Bearer {{apiKey}}",

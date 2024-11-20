@@ -15,7 +15,7 @@
     const params = new URLSearchParams(queryString);
     var source = params.get("utm");
 
-    var endpoint = "http://localhost:3000/api/track";
+    var endpoint = "https://webwise-psi.vercel.app/api/track";
 
     function generateSessionId () { //generating a random session id
         return "session-" + Math.random().toString(36).substr(2,9);
