@@ -75,7 +75,7 @@ export async function POST(req : Request) {
     }
 }
 
-export async function OPTIONS(req: Request) {
+export async function OPTIONS() {
     const headers = new Headers();
     headers.set("Access-Control-Allow-Origin", "*");
     headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
