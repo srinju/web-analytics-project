@@ -39,17 +39,20 @@ the user dont add in already added websites and the https should not be there to
      our cusotom events api endpoint with the api key , and with a guide.
 24. Hyrdation issue in dashboard page
 25. Received `true` for a non-boolean attribute `cursor-text`. in settings page
+26. Deploy
+27. Chnage the loacl hosts urls to deployed url after deploying
 
 
  # TODO>>
   1. recheck the api/track endpoint (it may throw ERROR)
-  2. Deploy
-  3. Chnage the loacl hosts urls to deployed url after deploying
+  2. CORS ERROR in tracking script and track api endpoint
+  3. signin password checks
+  4. other users k liye add website kaam nhi kr rha h
+  5. see screenshot and update the next config file to handle the cors issue 
+  
      
      
 
-# MAJOR THING TO DO > 
---Make the description of the events table optional 
      
    
      
