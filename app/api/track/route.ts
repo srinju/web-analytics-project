@@ -22,13 +22,14 @@ export async function POST(req : Request) {
     const res = await req.json(); //get the payload
     const { domain , url , event , source} = res;
     try {
-        if(!url.startsWith(domain)) { //check thath the data domain matches with the data domain the user wants to monitor the website for
+        const urlDomain = new URL(url).hostname; //extracting the hostname from the url
+        if(urlDomain !== domain){
             return NextResponse.json({
-                error : "the script points to a different domain than the current url.make , sure they match?"
+                error : "The script points to a different domain than the current url . Make sure they match."
             },{
                 status : 401,
                 headers : headers
-            });
+            })
         }
         if(event == "session_start") { //create entry in visits for session start for user
             await prisma.visits.create({
