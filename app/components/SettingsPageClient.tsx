@@ -133,7 +133,7 @@ export default function SettingsPageClient({session} : SettingsPageClientProps) 
                             </button>                                                 
                         </div>
                         <div className="space-y-4 border-t border-white/10 bg-[#131313] p-6">
-                            <h1>You can Create Cusotom using Our API as instructed below :-</h1>
+                            <h1>You can Create Custom events using Our API as instructed below :-</h1>
                             <p className="text-sm text-red-500">Copy the Code</p>
                             <div>
                                 <CodeComp />
