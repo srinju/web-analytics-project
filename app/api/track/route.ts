@@ -12,39 +12,33 @@ import { NextResponse } from "next/server";
 //if event is session start then add the record to the visits table
 //if the event is pageview then add the record to the page view table
 
-//cors error fix>
-
- const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  };
-  
-  export async function OPTIONS() {
-    return NextResponse.json({}, { headers: corsHeaders });
-  }
-
 const prisma  = new PrismaClient();
 
 export async function POST(req : Request) {
+    //handle cors policy
+    const headers = new Headers();
+    headers.set("Access-Control-Allow-Origin", "*"); 
+    headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    headers.set("Access-Control-Allow-Headers", "Content-Type");
     const session = await getServerSession(authOptions);
+
     if(!session) {
         return NextResponse.json({
             messgae : "unauthorised"
         }, {
             status : 401,
-            headers : corsHeaders
+            headers : headers
         })
     }
     const res = await req.json(); //get the payload
     const { domain , url , event , source} = res;
     try {
-        if(!url.includes(domain)) { //check thath the data domain matches with the data domain the user wants to monitor the website for
+        if(!url.startsWith(domain)) { //check thath the data domain matches with the data domain the user wants to monitor the website for
             return NextResponse.json({
                 error : "the script points to a different domain than the current url.make , sure they match?"
             },{
                 status : 401,
-                headers : corsHeaders
+                headers : headers
             });
         }
         if(event == "session_start") { //create entry in visits for session start for user
@@ -52,7 +46,6 @@ export async function POST(req : Request) {
                 data : {
                     website_id : domain,
                     source : source ?? "Direct"
-                    //userid : session.user.id
                 }
             });
         }
@@ -61,7 +54,6 @@ export async function POST(req : Request) {
                 data : {
                     domain : domain,
                     page : url,
-                    //userid : session.user.id
                 }
             });
         }
@@ -70,7 +62,7 @@ export async function POST(req : Request) {
             res
         },{
             status : 200,
-            headers : corsHeaders
+            headers : headers
         })
     } catch (error) {
         console.error("error occured ",error);
@@ -78,7 +70,16 @@ export async function POST(req : Request) {
             message : "an error occured occured while inserting tracking data in the database"
         }, {
             status : 500,
-            headers : corsHeaders
+            headers : headers
         })
     }
+}
+
+export async function OPTIONS(req: Request) {
+    const headers = new Headers();
+    headers.set("Access-Control-Allow-Origin", "*");
+    headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    headers.set("Access-Control-Allow-Headers", "Content-Type");
+
+    return NextResponse.json(null, { headers });
 }

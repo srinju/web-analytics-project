@@ -7,6 +7,7 @@ import Link from "next/link";
 
 export default async function DashboardPage() {
     const session = await getServerSession(authOptions);
+    console.log("Dashboard User session : ",JSON.stringify(session,null,2));
     if(!session){
         return null
     }

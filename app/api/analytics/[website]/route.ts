@@ -11,6 +11,12 @@ export interface RouteSegmentConfig {
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export  async function GET(req : NextRequest , { params } : any ) {
+
+    //handle cors policy
+    const headers = new Headers();
+    headers.set("Access-Control-Allow-Origin", "*"); 
+    headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    headers.set("Access-Control-Allow-Headers", "Content-Type");
     
     const {website} = await params;
     console.log("api called for website ", website);
@@ -18,7 +24,8 @@ export  async function GET(req : NextRequest , { params } : any ) {
         return NextResponse.json({
             message : "website not provided"
         }, {
-            status : 400
+            status : 400,
+            headers : headers
         });
     }
     
@@ -35,7 +42,8 @@ export  async function GET(req : NextRequest , { params } : any ) {
             return NextResponse.json({
                 error : "website not found!!"
             }, {
-                status : 404
+                status : 404,
+                headers : headers
             });
         }
 
@@ -63,14 +71,25 @@ export  async function GET(req : NextRequest , { params } : any ) {
             events,
             websiteData
         },{
-            status : 200
+            status : 200,
+            headers : headers
         });
     } catch (error) {
         console.error("an error occured while fetching analytics ", error);
         return NextResponse.json({
             error : "Internal server error"
         },{
-            status : 500
+            status : 500,
+            headers : headers
         })
     }
+}
+
+export async function OPTIONS(req: Request) {
+    const headers = new Headers();
+    headers.set("Access-Control-Allow-Origin", "*");
+    headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    headers.set("Access-Control-Allow-Headers", "Content-Type");
+
+    return NextResponse.json(null, { headers });
 }

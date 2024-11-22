@@ -15,8 +15,15 @@ export async function POST(req : Request ){
             status : 401
         });
     }
-    const {website} = await req.json();
     try {
+        const {website} = await req.json();
+        if(!website.trim()){
+            return NextResponse.json({
+                error: "website name cannot be empty!"
+            }, {
+                status : 400
+            });
+        }
         const existingWebsite = await prisma.website.findFirst({
             where : {
                 website_name : website.trim(),
@@ -47,7 +54,7 @@ export async function POST(req : Request ){
     } catch(err){
         console.error("error occured ",err);
         return NextResponse.json({
-            message : "faliled to add website",
+            error : "Internal Server Error",
         },{
             status : 500
         });

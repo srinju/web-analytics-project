@@ -15,6 +15,7 @@ export default  function AddWebsitePage() {
         if(website.trim() == "" || loading) return;
         try {
             setLoading(true);
+            setError("");            
             const response = await fetch('/api/addWebsite',{
                 method : 'POST',
                 headers : {
@@ -22,26 +23,23 @@ export default  function AddWebsitePage() {
                 },
                 body : JSON.stringify({website})
             });
-            console.log("API repsonse ",response);
+            const data = await response.json();
+            console.log("raw API repsonse ",response);
+            console.log("Response Data" , data);
             if(response.status === 409){
                 setError("This domain is already added!");
             } else if (!response.ok){
-                throw new Error("Failed to add Website!!");
+                throw new Error("Failed to add Website!!" , data.message);
             } else {
-                //const data = await response.json();
                 setError("");
-                setLoading(false);
                 setStep(2);
             }  
-        } catch (error : unknown) {
-            if (error instanceof Error) {
-                console.error("error occurred while checking domain!!", error.message);
-                setError("An error occurred, Please try again!!");
-            } else {
-                console.error("Unknown error occurred:", error);
-                setError("An unexpected error occurred. Please try again!!");
-            }
-        } 
+        } catch (error) {
+            console.error("Error occured while checking domain ",error);
+            setError("An error occured . Please try again. If you are adding a website added by another user then you cant add it as they already have a tracking script initialised , and they are already monitoring it.");
+        } finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => { //more error handling 

@@ -13,6 +13,11 @@ import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function POST(req : Request){
+    //handle cors policy
+    const headers = new Headers();
+    headers.set("Access-Control-Allow-Origin", "*"); 
+    headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    headers.set("Access-Control-Allow-Headers", "Content-Type");
     try {
         const authheader = req.headers.get("authorization");
         const {name , domain , description} = await req.json();
@@ -28,7 +33,8 @@ export async function POST(req : Request){
                     return NextResponse.json({
                         error : "name and domain fields must not be empty!!"
                     },{
-                        status : 400
+                        status : 400,
+                        headers : headers
                     });
                 } else {
                     const Event = await prisma.events.create({
@@ -42,14 +48,16 @@ export async function POST(req : Request){
                         message : "events created successfully!!",
                         Event
                     },{
-                        status : 200
+                        status : 200,
+                        headers : headers
                     })
                 }
             } else {
                 return NextResponse.json({
                     error : "unauthorized"
                 },{
-                    status : 401
+                    status : 401,
+                    headers : headers
                 });
             }
         }
@@ -58,7 +66,17 @@ export async function POST(req : Request){
         return NextResponse.json({
             message : "Internal Server Error"
         },{
-            status : 500
+            status : 500,
+            headers : headers
         });
     }
+}
+
+export async function OPTIONS(req: Request) {
+    const headers = new Headers();
+    headers.set("Access-Control-Allow-Origin", "*");
+    headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    headers.set("Access-Control-Allow-Headers", "Content-Type");
+
+    return NextResponse.json(null, { headers });
 }
