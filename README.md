@@ -44,7 +44,8 @@ the user dont add in already added websites and the https should not be there to
 
   
      
-     
+#TODO>
+1. work on the custom events feature (make more advanced custom events)
 
      
    
