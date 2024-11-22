@@ -2,9 +2,7 @@
 
 //handles the requests from the tracking script and store all the tracking data to the database 
 
-import { authOptions } from "@/app/lib/auth";
 import { PrismaClient } from "@prisma/client";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 //get the payloasd
@@ -20,16 +18,7 @@ export async function POST(req : Request) {
     headers.set("Access-Control-Allow-Origin", "*"); 
     headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
     headers.set("Access-Control-Allow-Headers", "Content-Type");
-    const session = await getServerSession(authOptions);
-
-    if(!session) {
-        return NextResponse.json({
-            messgae : "unauthorised"
-        }, {
-            status : 401,
-            headers : headers
-        })
-    }
+    
     const res = await req.json(); //get the payload
     const { domain , url , event , source} = res;
     try {
